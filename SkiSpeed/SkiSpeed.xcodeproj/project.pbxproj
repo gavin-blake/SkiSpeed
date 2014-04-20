@@ -21,6 +21,7 @@
 		EB8A734B18EBD13E003931D8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB8A732D18EBD13E003931D8 /* UIKit.framework */; };
 		EB8A735318EBD13E003931D8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EB8A735118EBD13E003931D8 /* InfoPlist.strings */; };
 		EB8A735518EBD13E003931D8 /* SkiSpeedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB8A735418EBD13E003931D8 /* SkiSpeedTests.m */; };
+		EBE88C8919031CC9007754D9 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBE88C8819031CC9007754D9 /* CoreMotion.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		EB8A735018EBD13E003931D8 /* SkiSpeedTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SkiSpeedTests-Info.plist"; sourceTree = "<group>"; };
 		EB8A735218EBD13E003931D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EB8A735418EBD13E003931D8 /* SkiSpeedTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SkiSpeedTests.m; sourceTree = "<group>"; };
+		EBE88C8819031CC9007754D9 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBE88C8919031CC9007754D9 /* CoreMotion.framework in Frameworks */,
 				EB8A732C18EBD13E003931D8 /* CoreGraphics.framework in Frameworks */,
 				EB8A732E18EBD13E003931D8 /* UIKit.framework in Frameworks */,
 				EB8A732A18EBD13E003931D8 /* Foundation.framework in Frameworks */,
@@ -101,6 +104,7 @@
 		EB8A732818EBD13D003931D8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EBE88C8819031CC9007754D9 /* CoreMotion.framework */,
 				EB8A732918EBD13E003931D8 /* Foundation.framework */,
 				EB8A732B18EBD13E003931D8 /* CoreGraphics.framework */,
 				EB8A732D18EBD13E003931D8 /* UIKit.framework */,
@@ -461,6 +465,7 @@
 				EB8A735A18EBD13E003931D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EB8A735B18EBD13E003931D8 /* Build configuration list for PBXNativeTarget "SkiSpeedTests" */ = {
 			isa = XCConfigurationList;
@@ -469,6 +474,7 @@
 				EB8A735D18EBD13E003931D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
