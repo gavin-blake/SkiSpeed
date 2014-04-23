@@ -10,67 +10,81 @@
 
 @interface UIViewController ()
 
+
+@end
+
+@implementation SkiSpeedViewController
+
+-(IBAction)startTracking:(id)sender{
+    clock = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timer) userInfo:nil repeats:YES];
+}
+-(IBAction)stopTracking:(id)sender{
+    [clock invalidate];
+}
+
+-(IBAction)resetButton:(id)sender{
+    counter =0;
+    totTime.text = [NSString stringWithFormat:@"0"];
+}
+
 - (void)viewDidLoad
 {
-    [super viewDidLoad]
-    currentMaxAccelX = 0;
-    currentMaxAccelY = 0;
-    currentMaxAccelZ = 0;
-    currentTotalTime = 0;
-    currentCurrentSpeed = 0;
-    currentTopSpeed = 0;
-    currentAverageSpeed = 0;
-    currentDistanceTravelled=0;
-    
-    
+    [super viewDidLoad];
     self.motionManager = [[CMMotionManager alloc] init];
-    self.motionManager.accelerometerUpdateInterval = .25;
-
+    self.motionManager.accelerometerUpdateInterval = .2;
+    self.motionManager.gyroUpdateInterval = .2;
     
     [self.motionManager startAccelerometerUpdatesToQueue:[NSOperationQueue currentQueue]
-                                             withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
+                                             withHandler:^(CMAccelerometerData  *accelerometerData, NSError *error) {
                                                  [self outputData:accelerometerData.acceleration];
                                                  if(error){
-                                                     
                                                      NSLog(@"%@", error);
                                                  }
                                              }];
-    
+}
+
+-(void)timer {
+         counter=counter+1;
+         totTime.text = [NSString stringWithFormat:@"%i", counter];
+     }
+     
+-(void)outputData:(CMAcceleration)acceleration {
+         float currSpeed;
+         
+         float accX = fabs(acceleration.x);
+         float accY=fabs(acceleration.y);
+         float accZ= fabs(acceleration.z);
+         float accelerateXAndY;
+         accelerateXAndY=powf(accX,2)+pow(accY,2);
+         float acceleratePartOne;
+         acceleratePartOne=powf(accZ,2);
+         float accelerateAddZ;
+         accelerateAddZ=accelerateXAndY+acceleratePartOne;
+         double accelerateTotal;
+         accelerateTotal=sqrtf(accelerateAddZ); //so this is the total acceleration
+         
+         
+         
+         // this is where I'm not sure what to say
+         // I need to figure out how to record two different totAccelerations that are a quarter second apart and then use those to calculate the current speed
+         
+         //then I can use this code below to report it out
+         
+         double currentCurrentSpeed = currSpeed;
+         double currentSpeed;
+         double currentTopSpeed;
+        self->curSpeed.text = [NSString stringWithFormat:@" %.1fg",currentCurrentSpeed];
+         if(fabs(currentSpeed) > fabs(currentTopSpeed))
+         {
+             currentTopSpeed = currentSpeed;
+         }
+        self->maxSpeed.text = [NSString stringWithFormat:@" %.1fg",currentTopSpeed];
+         
     
 }
-  -(void)outputData:(CMAcceleration)acceleration {
-      double currSpeed;
-      double accX = acceleration.x;
-      double accY=acceleration.y;
-      double accZ= acceleration.z;
-      double accleration=sqrt(((sqrt(((accX)^2)+((accY)^2)))^2)+((accZ)^2));
-      
-      
-      // this is where I'm not sure what to say
-      // I need to figure out how to record two different totAccelerations that are a quarter second apart and then use those to calculate the current speed
-      
-      //then I can use this code below to report it out
-      
-      
-      currentCurrentSpeed = currentSpeed;
-      self.curSpeed.text = [NSString stringWithFormat:@" %.2fg",currentCurrentSpeed];
-      if(fabs(currentSpeed) > fabs(currentTopSpeed))
-        {
-            currentTopSpeed = currentSpeed;
-        }
-      
-      self.topSpeed.text = [NSString stringWithFormat:@" %.2f",currentTopSpeed];
      
-        
-    }
-      
-- (IBAction)resetMaxValues:(id)sender {
-          
-          currentMaxAccelX = 0;
-          currentMaxAccelY = 0;
-          currentMaxAccelZ = 0;
-          
-          
-      }
+
+
+
 
 @end

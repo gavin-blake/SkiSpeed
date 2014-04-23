@@ -9,22 +9,26 @@
 #import <UIKit/UIKit.h>
 #import <CoreMotion/CoreMotion.h>
 
-double totalTime;
-double currentSpeed;
-double topSpeed;
-double averageSpeed;
-double distanceTravelled;
 
-@interface ViewController : UIViewController
+int counter;
+float currentTopSpeed;
 
-@property (strong, nonatomic) IBOutlet UILabel *totTime;
-@property (strong, nonatomic) IBOutlet UILabel *curSpeed;
-@property (strong, nonatomic) IBOutlet UILabel *maxSpeed;
-@property (strong, nonatomic) IBOutlet UILabel *avgSpeed;
-@property (strong, nonatomic) IBOutlet UILabel *distTravel;
+@interface SkiSpeedViewController : UIViewController {
+    IBOutlet UILabel *totTime;
+    IBOutlet UILabel *curSpeed;
+    IBOutlet UILabel *maxSpeed;
+    IBOutlet UILabel *avgSpeed;
+    IBOutlet UILabel *distTravel;
+    
+    NSTimer *clock;
+}
 
+-(void)timer;
+-(IBAction)startTracking:(id)sender;
+-(IBAction)stopTracking:(id)sender;
+-(IBAction)resetButton:(id)sender;
+-(void)OutputData;
 
-
-- (IBAction)resetMaxValues:(id)sender;
+@property (strong, nonatomic) CMMotionManager *motionManager;
 
 @end
