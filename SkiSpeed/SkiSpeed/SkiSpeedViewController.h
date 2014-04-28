@@ -10,7 +10,7 @@
 #import <CoreMotion/CoreMotion.h>
 
 
-int counter;
+float counter;
 float currentTopSpeed;
 
 @interface SkiSpeedViewController : UIViewController {

@@ -16,8 +16,9 @@
 @implementation SkiSpeedViewController
 
 -(IBAction)startTracking:(id)sender{
-    clock = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timer) userInfo:nil repeats:YES];
+    clock = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(timer) userInfo:nil repeats:YES];
 }
+
 -(IBAction)stopTracking:(id)sender{
     [clock invalidate];
 }
@@ -25,6 +26,8 @@
 -(IBAction)resetButton:(id)sender{
     counter =0;
     totTime.text = [NSString stringWithFormat:@"0"];
+    currentTopSpeed=0;
+    maxSpeed.text = [NSString stringWithFormat:@"0"];
 }
 
 - (void)viewDidLoad
@@ -44,24 +47,29 @@
 }
 
 -(void)timer {
-         counter=counter+1;
-         totTime.text = [NSString stringWithFormat:@"%i", counter];
+         counter=counter+0.25;
+         totTime.text = [NSString stringWithFormat:@"%.2f", counter];
      }
      
 -(void)outputData:(CMAcceleration)acceleration {
-         float currSpeed;
-         
-         float accX = fabs(acceleration.x);
-         float accY=fabs(acceleration.y);
-         float accZ= fabs(acceleration.z);
-         float accelerateXAndY;
-         accelerateXAndY=powf(accX,2)+pow(accY,2);
-         float acceleratePartOne;
-         acceleratePartOne=powf(accZ,2);
-         float accelerateAddZ;
-         accelerateAddZ=accelerateXAndY+acceleratePartOne;
-         double accelerateTotal;
-         accelerateTotal=sqrtf(accelerateAddZ); //so this is the total acceleration
+    float currSpeed;
+    float accX = fabs(acceleration.x);
+    float accY=fabs(acceleration.y);
+    float accZ= fabs(acceleration.z);
+    float accelerateXAndY;
+    accelerateXAndY=powf(accX,2)+pow(accY,2);
+    float acceleratePartOne;
+    acceleratePartOne=powf(accZ,2);
+    float accelerateAddZ;
+    accelerateAddZ=accelerateXAndY+acceleratePartOne;
+    double accelerateTotal;
+    accelerateTotal=sqrtf(accelerateAddZ); //so this is the total acceleration...
+    
+    //for {
+        
+    //}
+    
+    
          
          
          
@@ -70,17 +78,15 @@
          
          //then I can use this code below to report it out
          
-         double currentCurrentSpeed = currSpeed;
-         double currentSpeed;
-         double currentTopSpeed;
-        self->curSpeed.text = [NSString stringWithFormat:@" %.1fg",currentCurrentSpeed];
-         if(fabs(currentSpeed) > fabs(currentTopSpeed))
-         {
-             currentTopSpeed = currentSpeed;
-         }
-        self->maxSpeed.text = [NSString stringWithFormat:@" %.1fg",currentTopSpeed];
-         
-    
+    double currentCurrentSpeed = currSpeed;
+    double currentSpeed;
+    double currentTopSpeed;
+    self->curSpeed.text = [NSString stringWithFormat:@" %.1fg",currentCurrentSpeed];
+    if(fabs(currentSpeed) > fabs(currentTopSpeed)) {
+        currentTopSpeed = currentSpeed;
+    }
+    self->maxSpeed.text = [NSString stringWithFormat:@" %.1fg",currentTopSpeed];
+
 }
      
 
