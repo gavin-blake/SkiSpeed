@@ -12,6 +12,13 @@
 
 float counter;
 float currentTopSpeed;
+float initVelocity;
+float currentVelocity;
+float initAcceleration;
+double accelerateTotal;
+double changeInAcceleration;
+double minusVelocity;
+float topSpeed;
 
 @interface SkiSpeedViewController : UIViewController {
     IBOutlet UILabel *totTime;
@@ -27,7 +34,8 @@ float currentTopSpeed;
 -(IBAction)startTracking:(id)sender;
 -(IBAction)stopTracking:(id)sender;
 -(IBAction)resetButton:(id)sender;
--(void)OutputData;
+-(void)findMaxSpeed;
+-(void)findAverageSpeed;
 
 @property (strong, nonatomic) CMMotionManager *motionManager;
 

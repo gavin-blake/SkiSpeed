@@ -24,10 +24,14 @@
 }
 
 -(IBAction)resetButton:(id)sender{
+    initVelocity=0;
+    initAcceleration=0;
     counter =0;
+    topSpeed=0;
     totTime.text = [NSString stringWithFormat:@"0"];
-    currentTopSpeed=0;
     maxSpeed.text = [NSString stringWithFormat:@"0"];
+    curSpeed.text = [NSString stringWithFormat:@"0"];
+    
 }
 
 - (void)viewDidLoad
@@ -46,13 +50,7 @@
                                              }];
 }
 
--(void)timer {
-         counter=counter+0.25;
-         totTime.text = [NSString stringWithFormat:@"%.2f", counter];
-     }
-     
 -(void)outputData:(CMAcceleration)acceleration {
-    float currSpeed;
     float accX = fabs(acceleration.x);
     float accY=fabs(acceleration.y);
     float accZ= fabs(acceleration.z);
@@ -62,33 +60,32 @@
     acceleratePartOne=powf(accZ,2);
     float accelerateAddZ;
     accelerateAddZ=accelerateXAndY+acceleratePartOne;
-    double accelerateTotal;
+    
     accelerateTotal=sqrtf(accelerateAddZ); //so this is the total acceleration...
-    
-    //for {
-        
-    //}
-    
-    
-         
-         
-         
-         // this is where I'm not sure what to say
-         // I need to figure out how to record two different totAccelerations that are a quarter second apart and then use those to calculate the current speed
-         
-         //then I can use this code below to report it out
-         
-    double currentCurrentSpeed = currSpeed;
-    double currentSpeed;
-    double currentTopSpeed;
-    self->curSpeed.text = [NSString stringWithFormat:@" %.1fg",currentCurrentSpeed];
-    if(fabs(currentSpeed) > fabs(currentTopSpeed)) {
-        currentTopSpeed = currentSpeed;
-    }
-    self->maxSpeed.text = [NSString stringWithFormat:@" %.1fg",currentTopSpeed];
+    changeInAcceleration=accelerateTotal-initAcceleration;
+}
 
+
+-(void)timer {
+    counter=counter+0.25;
+    totTime.text = [NSString stringWithFormat:@"%.2f", counter];
+    minusVelocity=changeInAcceleration*counter;  //everytime the timer fires, it will do all this code
+    currentVelocity=initVelocity+minusVelocity;
+    curSpeed.text = [NSString stringWithFormat:@"%.1f", currentVelocity];
+    initVelocity=currentVelocity;
+    initAcceleration=accelerateTotal;
 }
      
+-(void)findMaxSpeed {
+    if (currentVelocity > topSpeed) {
+        topSpeed=currentVelocity;
+        maxSpeed.text = [NSString stringWithFormat:@"%.1f", topSpeed];
+    }
+}
+
+-(void)findAverageSpeed {
+    //average speed code goes here
+}
 
 
 
