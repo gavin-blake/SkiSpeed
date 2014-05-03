@@ -8,7 +8,7 @@
 
 #import "SkiSpeedViewController.h"
 
-@interface UIViewController ()
+@interface SkiSpeedViewController ()
 
 
 @end
@@ -28,6 +28,8 @@
     initAcceleration=0;
     counter =0;
     topSpeed=0;
+    gettingAverageVelocity=0;
+    averageVelocity=0;
     totTime.text = [NSString stringWithFormat:@"0"];
     maxSpeed.text = [NSString stringWithFormat:@"0"];
     curSpeed.text = [NSString stringWithFormat:@"0"];
@@ -43,14 +45,14 @@
     
     [self.motionManager startAccelerometerUpdatesToQueue:[NSOperationQueue currentQueue]
                                              withHandler:^(CMAccelerometerData  *accelerometerData, NSError *error) {
-                                                 [self outputData:accelerometerData.acceleration];
+                                                 [self outputAccelData:accelerometerData.acceleration];
                                                  if(error){
                                                      NSLog(@"%@", error);
                                                  }
                                              }];
 }
 
--(void)outputData:(CMAcceleration)acceleration {
+-(void)outputAccelData:(CMAcceleration)acceleration {
     float accX = fabs(acceleration.x);
     float accY=fabs(acceleration.y);
     float accZ= fabs(acceleration.z);
@@ -72,8 +74,11 @@
     minusVelocity=changeInAcceleration*counter;  //everytime the timer fires, it will do all this code
     currentVelocity=initVelocity+minusVelocity;
     curSpeed.text = [NSString stringWithFormat:@"%.1f", currentVelocity];
+    gettingAverageVelocity=gettingAverageVelocity+currentVelocity;
+    averageVelocity=gettingAverageVelocity/counter;
     initVelocity=currentVelocity;
     initAcceleration=accelerateTotal;
+    avgSpeed.text=[NSString stringWithFormat:@"%.1f", averageVelocity];
 }
      
 -(void)findMaxSpeed {
@@ -81,10 +86,6 @@
         topSpeed=currentVelocity;
         maxSpeed.text = [NSString stringWithFormat:@"%.1f", topSpeed];
     }
-}
-
--(void)findAverageSpeed {
-    //average speed code goes here
 }
 
 
