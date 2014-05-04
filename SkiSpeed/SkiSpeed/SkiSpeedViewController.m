@@ -15,15 +15,15 @@
 
 @implementation SkiSpeedViewController
 
--(IBAction)startTracking:(id)sender{
+-(IBAction)startTracking:(id)sender{ //modeled off Matt Heaney's Timer XCode 5 Tutorial
     clock = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(timer) userInfo:nil repeats:YES];
 }
 
--(IBAction)stopTracking:(id)sender{
+-(IBAction)stopTracking:(id)sender{ //modeled off Matt Heaney's Timer XCode 5 Tutorial
     [clock invalidate];
 }
 
--(IBAction)resetButton:(id)sender{
+-(IBAction)resetButton:(id)sender{ //some of this code is modeled off Matt Heaney's Timer XCode 5 Tutorial
     initVelocity=0;
     initAcceleration=0;
     counter =0;
@@ -33,10 +33,11 @@
     totTime.text = [NSString stringWithFormat:@"0"];
     maxSpeed.text = [NSString stringWithFormat:@"0"];
     curSpeed.text = [NSString stringWithFormat:@"0"];
+    avgSpeed.text = [NSString stringWithFormat:@"0"];
     
 }
 
-- (void)viewDidLoad
+- (void)viewDidLoad //all of the code under viewDidLoad is copied from Joe Hoffman at http://nscookbook.com/2013/03/ios-programming-recipe-19-using-core-motion-to-access-gyro-and-accelerometer/.
 {
     [super viewDidLoad];
     self.motionManager = [[CMMotionManager alloc] init];
@@ -53,9 +54,9 @@
 }
 
 -(void)outputAccelData:(CMAcceleration)acceleration {
-    float accX = fabs(acceleration.x);
-    float accY=fabs(acceleration.y);
-    float accZ= fabs(acceleration.z);
+    float accX = fabs(acceleration.x); //from Joe Hoffman at http://nscookbook.com/2013/03/ios-programming-recipe-19-using-core-motion-to-access-gyro-and-accelerometer/.
+    float accY=fabs(acceleration.y); //from Joe Hoffman at http://nscookbook.com/2013/03/ios-programming-recipe-19-using-core-motion-to-access-gyro-and-accelerometer/.
+    float accZ= fabs(acceleration.z); //from Joe Hoffman at http://nscookbook.com/2013/03/ios-programming-recipe-19-using-core-motion-to-access-gyro-and-accelerometer/.
     float accelerateXAndY;
     accelerateXAndY=powf(accX,2)+pow(accY,2);
     float acceleratePartOne;
@@ -68,10 +69,10 @@
 }
 
 
--(void)timer {
-    counter=counter+0.25;
-    totTime.text = [NSString stringWithFormat:@"%.2f", counter];
-    minusVelocity=changeInAcceleration*counter;  //everytime the timer fires, it will do all this code
+-(void)timer { //My 3D printing teacher, Dr. Bricker, helped me think up how to use this to check velocity.
+    counter=counter+0.25; //this code is modeled off Matt Heaney's Timer XCode 5 Tutorial
+    totTime.text = [NSString stringWithFormat:@"%.2f", counter]; //this code is modeled off Matt Heaney's Timer XCode 5 Tutorial
+    minusVelocity=changeInAcceleration*counter;
     currentVelocity=initVelocity+minusVelocity;
     curSpeed.text = [NSString stringWithFormat:@"%.1f", currentVelocity];
     gettingAverageVelocity=gettingAverageVelocity+currentVelocity;
@@ -79,14 +80,12 @@
     initVelocity=currentVelocity;
     initAcceleration=accelerateTotal;
     avgSpeed.text=[NSString stringWithFormat:@"%.1f", averageVelocity];
-}
-     
--(void)findMaxSpeed {
     if (currentVelocity > topSpeed) {
         topSpeed=currentVelocity;
         maxSpeed.text = [NSString stringWithFormat:@"%.1f", topSpeed];
     }
 }
+
 
 
 
