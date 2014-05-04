@@ -54,9 +54,9 @@
 }
 
 -(void)outputAccelData:(CMAcceleration)acceleration {
-    float accX = fabs(acceleration.x); //from Joe Hoffman at http://nscookbook.com/2013/03/ios-programming-recipe-19-using-core-motion-to-access-gyro-and-accelerometer/.
-    float accY=fabs(acceleration.y); //from Joe Hoffman at http://nscookbook.com/2013/03/ios-programming-recipe-19-using-core-motion-to-access-gyro-and-accelerometer/.
-    float accZ= fabs(acceleration.z); //from Joe Hoffman at http://nscookbook.com/2013/03/ios-programming-recipe-19-using-core-motion-to-access-gyro-and-accelerometer/.
+    float accX = fabsf(acceleration.x); //modeled off Joe Hoffman at http://nscookbook.com/2013/03/ios-programming-recipe-19-using-core-motion-to-access-gyro-and-accelerometer/.
+    float accY=fabsf(acceleration.y); //modeled off Joe Hoffman at http://nscookbook.com/2013/03/ios-programming-recipe-19-using-core-motion-to-access-gyro-and-accelerometer/.
+    float accZ= fabsf(acceleration.z); //modeled off Joe Hoffman at http://nscookbook.com/2013/03/ios-programming-recipe-19-using-core-motion-to-access-gyro-and-accelerometer/.
     float accelerateXAndY;
     accelerateXAndY=powf(accX,2)+pow(accY,2);
     float acceleratePartOne;
@@ -74,7 +74,7 @@
     totTime.text = [NSString stringWithFormat:@"%.2f", counter]; //this code is modeled off Matt Heaney's Timer XCode 5 Tutorial
     minusVelocity=changeInAcceleration*counter;
     currentVelocity=initVelocity+minusVelocity;
-    curSpeed.text = [NSString stringWithFormat:@"%.1f", currentVelocity];
+    curSpeed.text = [NSString stringWithFormat:@"%.1f", fabsf(currentVelocity)];
     gettingAverageVelocity=gettingAverageVelocity+currentVelocity;
     averageVelocity=gettingAverageVelocity/counter;
     initVelocity=currentVelocity;
