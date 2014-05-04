@@ -15,15 +15,15 @@
 
 @implementation SkiSpeedViewController
 
--(IBAction)startTracking:(id)sender{ //modeled off Matt Heaney's Timer XCode 5 Tutorial
+-(IBAction)startTracking:(id)sender{ //modeled off Matt Heaney's Timer XCode 5 Tutorial https://www.youtube.com/watch?v=Jt10xmZLcW8
     clock = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(timer) userInfo:nil repeats:YES];
 }
 
--(IBAction)stopTracking:(id)sender{ //modeled off Matt Heaney's Timer XCode 5 Tutorial
+-(IBAction)stopTracking:(id)sender{ //modeled off Matt Heaney's Timer XCode 5 Tutorial https://www.youtube.com/watch?v=Jt10xmZLcW8
     [clock invalidate];
 }
 
--(IBAction)resetButton:(id)sender{ //some of this code is modeled off Matt Heaney's Timer XCode 5 Tutorial
+-(IBAction)resetButton:(id)sender{ //some of this code is modeled off Matt Heaney's Timer XCode 5 Tutorial https://www.youtube.com/watch?v=Jt10xmZLcW8https://www.youtube.com/watch?v=Jt10xmZLcW8
     initVelocity=0;
     initAcceleration=0;
     counter =0;
@@ -70,8 +70,8 @@
 
 
 -(void)timer { //My 3D printing teacher, Dr. Bricker, helped me think up how to use this to check velocity.
-    counter=counter+0.25; //this code is modeled off Matt Heaney's Timer XCode 5 Tutorial
-    totTime.text = [NSString stringWithFormat:@"%.2f", counter]; //this code is modeled off Matt Heaney's Timer XCode 5 Tutorial
+    counter=counter+0.25; //this code is modeled off Matt Heaney's Timer XCode 5 Tutorial https://www.youtube.com/watch?v=Jt10xmZLcW8
+    totTime.text = [NSString stringWithFormat:@"%.2f", counter]; //this code is modeled off Matt Heaney's Timer XCode 5 Tutorial https://www.youtube.com/watch?v=Jt10xmZLcW8
     minusVelocity=changeInAcceleration*counter;
     currentVelocity=initVelocity+minusVelocity;
     curSpeed.text = [NSString stringWithFormat:@"%.1f", fabsf(currentVelocity)];
@@ -79,10 +79,10 @@
     averageVelocity=gettingAverageVelocity/counter;
     initVelocity=currentVelocity;
     initAcceleration=accelerateTotal;
-    avgSpeed.text=[NSString stringWithFormat:@"%.1f", averageVelocity];
+    avgSpeed.text=[NSString stringWithFormat:@"%.1f", fabsf(averageVelocity)];
     if (currentVelocity > topSpeed) {
         topSpeed=currentVelocity;
-        maxSpeed.text = [NSString stringWithFormat:@"%.1f", topSpeed];
+        maxSpeed.text = [NSString stringWithFormat:@"%.1f", fabsf(topSpeed)];
     }
 }
 
